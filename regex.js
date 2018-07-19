@@ -6,11 +6,9 @@ Array.prototype.equals = function (array) {
     // if the other array is a falsy value, return
     if (!array)
         return false;
-
     // compare lengths - can save a lot of time 
     if (this.length != array.length)
         return false;
-
     for (var i = 0, l=this.length; i < l; i++) {
         // Check if we have nested arrays
         if (this[i] instanceof Array && array[i] instanceof Array) {
@@ -29,10 +27,10 @@ Array.prototype.equals = function (array) {
 Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
 
-
 // test whether the str provided is a valid email
 function testEmail (email) {
-  
+    var regexEmail = /^[\w\.]+@[\w]+\.\w{2,3}$/
+    return regexEmail.test(email)  
 }
 
 console.assert(testEmail("stroman.azariah@yahoo.com"));
@@ -52,6 +50,8 @@ console.assert(!testEmail("bonita43@"));
 
 // test whether the str provided is a valid phone
 function testPhone (phone) {
+    var regexPhone = /^\(?(\d{3})\)?[\-\.\s]?(\d{3})[\-\.]?(\d{4})$/
+    return regexPhone.test(phone)
   
 }
 
@@ -68,7 +68,8 @@ console.assert(!testPhone("mobile"));
 
 // test whether the number (as a string) sent to you is a binary number
 function testBinary (number) {
-  
+    var regexBinary = /^(0|1)(0|1)?(10100010)?$/
+    return regexBinary.test(number)
 }
 
 console.assert(testBinary("0"));
@@ -82,7 +83,8 @@ console.assert(!testBinary("911"));
 
 // test whether the number sent to you as a binary is an even number
 function testBinaryEven (number) {
-  
+    var regexBinaryEven = /^(1{3}010{3})?10$/
+    return regexBinaryEven.test(number)
 }
 
 console.assert(testBinaryEven("10"));
@@ -92,7 +94,8 @@ console.assert(!testBinaryEven("1011"));
 
 // test whether the number sent to yo is a valid hex string
 function testHex (str) {
-  
+    var regexHex = /^(\w{3,4})(\w{7})?$/
+    return regexHex.test(str)
 }
 
 console.assert(testHex("CAFE"));
@@ -101,6 +104,7 @@ console.assert(testHex("123"));
 console.assert(testHex("6720EB3A9D1"));
 console.assert(!testHex(""));
 console.assert(!testHex("COFFEE"));
+
 
 // test whether the str sent to you is valid for currency
 function testMoney (str) {
@@ -128,9 +132,11 @@ console.assert(!testMoney("$"));
 console.assert(!testMoney("31"));
 console.assert(!testMoney("$$31"));
 
+
 // test whether the str sent to you is a valid zip code
 function testZip (str) {
-  
+    var regexZip = /^(\d{5})[\-]?(\d{4})?$/
+    return regexZip.test(str)
 }
 
 console.assert(testZip("63936"));
@@ -144,6 +150,7 @@ console.assert(!testZip("7952"));
 console.assert(!testZip("115761"));
 console.assert(!testZip("60377-331"));
 console.assert(!testZip("8029-3924"));
+
 
 // This challenge is to parse MarkDown links - so [text](http://example.com)
 // would simply be replaced with the following HTML: <a href="http://example.com">text</a>.
@@ -180,14 +187,15 @@ console.assert(markDownItalics('*italic* **bold** *italic* **bold**') === '<em>i
 console.assert(markDownItalics('*invalid markdown (do not parse)**') === '*invalid markdown (do not parse)**');
 console.assert(markDownItalics('random *asterisk') === 'random *asterisk');
 
-/*** Extraction ***/
 
+/*** Extraction ***/
 // Return an array of phone numbers from a given string
 function extractPhoneNumber (text) {
 
 }
 
 console.assert(extractPhoneNumber("Dear Mr. Davis, I got to know of your company through our mutual friend Fiona Williams and the training you offer to graduate students in Advertising. I am a graduate student of Mass Communications with specialization in Advertising.  I am currently pursuing the last year of my course. I would very much like to see firsthand the work environment in an advertising agency. If you would like a reference, my advisor can be reached at (454) 999-1212. You can contact me at (919) 123-4569 at your convenience.").equals(["(454) 999-1212", "(919) 123-4569"]))
+
 
 // Return an array of all emails found inside of given string
 function extractEmails (text) {
